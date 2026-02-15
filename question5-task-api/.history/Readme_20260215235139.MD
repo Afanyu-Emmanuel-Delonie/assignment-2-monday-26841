@@ -1,0 +1,168 @@
+# User Profile API (Bonus)
+
+A professional-grade User Management API that utilizes a standardized Response Wrapper (`ApiResponse<T>`) for consistent front-end communication.
+
+## Features
+
+* Standardized Responses: Every request returns a `success` boolean, a `message`, and the `data` payload
+* Advanced Search: Filter users by country and age range simultaneously
+* Account Control: Activate or deactivate user profiles via PATCH
+* Custom Error Handling: Returns structured JSON even when a user is not found
+
+## Standard Response Format
+
+All API responses follow this consistent structure:
+
+```json
+{
+    "success": true,
+    "message": "User profile created successfully",
+    "data": {
+        "userId": 1,
+        "username": "john_doe",
+        "email": "john@example.com"
+    }
+}
+```
+
+## Getting Started
+
+### Prerequisites
+
+* Java 17 or 21
+* Maven
+* Postman
+
+### How to Run
+
+1. Navigate to the project folder:
+   ```bash
+   cd bonus-user-api
+   ```
+2. Run the application:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+3. The API will be available at `http://localhost:8080`
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/users` | Register user with custom response |
+| GET | `/api/users/{username}` | Find user by username |
+| GET | `/api/users/search` | Search by `country`, `minAge`, `maxAge` |
+| PATCH | `/api/users/{id}/status` | Activate/Deactivate profile |
+
+## Sample Request & Response
+
+### 1. Register a New User
+
+**POST** `/api/users`
+
+Request Body:
+```json
+{
+    "username": "john_doe",
+    "email": "john@example.com",
+    "age": 25,
+    "country": "USA",
+    "active": true
+}
+```
+
+Response:
+```json
+{
+    "success": true,
+    "message": "User profile created successfully",
+    "data": {
+        "userId": 1,
+        "username": "john_doe",
+        "email": "john@example.com",
+        "age": 25,
+        "country": "USA",
+        "active": true
+    }
+}
+```
+
+### 2. Search Users by Country and Age Range
+
+**GET** `/api/users/search?country=USA&minAge=20&maxAge=30`
+
+Response:
+```json
+{
+    "success": true,
+    "message": "Users retrieved successfully",
+    "data": [
+        {
+            "userId": 1,
+            "username": "john_doe",
+            "email": "john@example.com",
+            "age": 25,
+            "country": "USA",
+            "active": true
+        }
+    ]
+}
+```
+
+### 3. Update User Status
+
+**PATCH** `/api/users/1/status?active=false`
+
+Response:
+```json
+{
+    "success": true,
+    "message": "User status updated successfully",
+    "data": {
+        "userId": 1,
+        "username": "john_doe",
+        "email": "john@example.com",
+        "age": 25,
+        "country": "USA",
+        "active": false
+    }
+}
+```
+
+### 4. Error Response Example
+
+**GET** `/api/users/nonexistent_user`
+
+Response:
+```json
+{
+    "success": false,
+    "message": "User not found",
+    "data": null
+}
+```
+
+## Project Structure
+
+* **Model**: `com.library.bonususerapi.model`
+* **Controller**: `com.library.bonususerapi.controller`
+* **Response Wrapper**: `com.library.bonususerapi.response.ApiResponse`
+
+## Key Implementation Details
+
+### ApiResponse Wrapper Class
+
+The `ApiResponse<T>` class provides a standardized response structure:
+
+```java
+public class ApiResponse<T> {
+    private boolean success;
+    private String message;
+    private T data;
+    
+    // Constructors, getters, and setters
+}
+```
+
+This wrapper ensures consistent response handling across all endpoints, making it easier for front-end developers to parse and handle API responses.
+
