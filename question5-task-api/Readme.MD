@@ -1,168 +1,94 @@
-# User Profile API (Bonus)
+# Task Management API
 
-A professional-grade User Management API that utilizes a standardized Response Wrapper (`ApiResponse<T>`) for consistent front-end communication.
+A specialized REST API for task tracking and project management, featuring priority-based filtering and status updates.
 
 ## Features
 
-* Standardized Responses: Every request returns a `success` boolean, a `message`, and the `data` payload
-* Advanced Search: Filter users by country and age range simultaneously
-* Account Control: Activate or deactivate user profiles via PATCH
-* Custom Error Handling: Returns structured JSON even when a user is not found
-
-## Standard Response Format
-
-All API responses follow this consistent structure:
-
-```json
-{
-    "success": true,
-    "message": "User profile created successfully",
-    "data": {
-        "userId": 1,
-        "username": "john_doe",
-        "email": "john@example.com"
-    }
-}
-```
+* Priority Classification: Organize tasks by "HIGH", "MEDIUM", or "LOW" priority levels
+* Status Filtering: Easily separate completed tasks from those still in progress
+* Partial Completion Updates: Uses the `PATCH` method to quickly mark tasks as finished without sending the entire task object
+* Deadline Tracking: Tasks include due dates to assist with time management and scheduling
 
 ## Getting Started
 
 ### Prerequisites
 
 * Java 17 or 21
-* Maven
+* Maven 3.x
 * Postman
 
 ### How to Run
 
 1. Navigate to the project folder:
    ```bash
-   cd bonus-user-api
+   cd question5-task-api
    ```
 2. Run the application:
    ```bash
    ./mvnw spring-boot:run
    ```
-3. The API will be available at `http://localhost:8080`
+3. The API will be accessible at `http://localhost:8080`
 
 ## API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/users` | Register user with custom response |
-| GET | `/api/users/{username}` | Find user by username |
-| GET | `/api/users/search` | Search by `country`, `minAge`, `maxAge` |
-| PATCH | `/api/users/{id}/status` | Activate/Deactivate profile |
+| GET | `/api/tasks` | Get the full task list |
+| GET | `/api/tasks/{id}` | Get a specific task by ID |
+| GET | `/api/tasks/priority/{level}` | Filter by priority (Path Variable) |
+| POST | `/api/tasks` | Create a new task |
+| PUT | `/api/tasks/{id}` | Update an entire task |
+| PATCH | `/api/tasks/{id}/complete` | Mark task as completed |
+| DELETE | `/api/tasks/{id}` | Remove a task from the list |
 
 ## Sample Request & Response
 
-### 1. Register a New User
+### 1. Filter by Priority (HIGH)
 
-**POST** `/api/users`
+**GET** `http://localhost:8080/api/tasks/priority/HIGH`
+
+Sample Response:
+```json
+[
+    {
+        "taskId": 1,
+        "title": "Database Design",
+        "description": "Design schema",
+        "completed": true,
+        "priority": "HIGH",
+        "dueDate": "2026-02-10"
+    }
+]
+```
+
+### 2. Mark Task as Completed
+
+**PATCH** `http://localhost:8080/api/tasks/2/complete`
+
+Expected Behavior: The `completed` boolean for task ID 2 is updated to `true`.
+
+### 3. Create a New Task
+
+**POST** `/api/tasks`
 
 Request Body:
 ```json
 {
-    "username": "john_doe",
-    "email": "john@example.com",
-    "age": 25,
-    "country": "USA",
-    "active": true
+    "title": "Complete Spring Boot Assignment",
+    "description": "Finish all REST API questions",
+    "completed": false,
+    "priority": "HIGH",
+    "dueDate": "2026-02-20"
 }
 ```
 
-Response:
-```json
-{
-    "success": true,
-    "message": "User profile created successfully",
-    "data": {
-        "userId": 1,
-        "username": "john_doe",
-        "email": "john@example.com",
-        "age": 25,
-        "country": "USA",
-        "active": true
-    }
-}
-```
+### 4. Filter by Completion Status
 
-### 2. Search Users by Country and Age Range
+**GET** `/api/tasks/status?completed=false`
 
-**GET** `/api/users/search?country=USA&minAge=20&maxAge=30`
-
-Response:
-```json
-{
-    "success": true,
-    "message": "Users retrieved successfully",
-    "data": [
-        {
-            "userId": 1,
-            "username": "john_doe",
-            "email": "john@example.com",
-            "age": 25,
-            "country": "USA",
-            "active": true
-        }
-    ]
-}
-```
-
-### 3. Update User Status
-
-**PATCH** `/api/users/1/status?active=false`
-
-Response:
-```json
-{
-    "success": true,
-    "message": "User status updated successfully",
-    "data": {
-        "userId": 1,
-        "username": "john_doe",
-        "email": "john@example.com",
-        "age": 25,
-        "country": "USA",
-        "active": false
-    }
-}
-```
-
-### 4. Error Response Example
-
-**GET** `/api/users/nonexistent_user`
-
-Response:
-```json
-{
-    "success": false,
-    "message": "User not found",
-    "data": null
-}
-```
+Expected Behavior: Returns all tasks that are not yet completed.
 
 ## Project Structure
 
-* **Model**: `com.library.bonususerapi.model`
-* **Controller**: `com.library.bonususerapi.controller`
-* **Response Wrapper**: `com.library.bonususerapi.response.ApiResponse`
-
-## Key Implementation Details
-
-### ApiResponse Wrapper Class
-
-The `ApiResponse<T>` class provides a standardized response structure:
-
-```java
-public class ApiResponse<T> {
-    private boolean success;
-    private String message;
-    private T data;
-    
-    // Constructors, getters, and setters
-}
-```
-
-This wrapper ensures consistent response handling across all endpoints, making it easier for front-end developers to parse and handle API responses.
-
+* **Model Package**: `com.afanyu.question5_task_api.modal.task`
+* **Controller Package**: `com.afanyu.question5_task_api.controller.task`
