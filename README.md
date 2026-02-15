@@ -66,11 +66,11 @@ All endpoints have been validated using Postman. Individual README files within 
 
 Each module has its own detailed README with specific endpoint documentation, sample requests, and response examples:
 
-- [Question 1 - Library Book Management API](./question1-library-api/README.md)
-- [Question 2 - Student Registration API](./question2-student-api/README.md)
-- [Question 3 - Restaurant Menu API](./question3-restaurant-api/README.md)
-- [Question 4 - E-Commerce Product API](./question4-ecommerce-api/README.md)
-- [Question 5 - Task Management API](./question5-task-api/README.md)
+- [Question 1 - Library Book Management API](./question1-library-api/Readme.md)
+- [Question 2 - Student Registration API](./question2-student-api/Readme.MD)
+- [Question 3 - Restaurant Menu API](./question3-restaurant-api/Readme.MD)
+- [Question 4 - E-Commerce Product API](./question4-ecommerce-api/Readme.MD)
+- [Question 5 - Task Management API](./question5-task-api/Readme.MD)
 - [Bonus - User Profile API](./bonus-user-api/README.md)
 
 ## Submission Details
