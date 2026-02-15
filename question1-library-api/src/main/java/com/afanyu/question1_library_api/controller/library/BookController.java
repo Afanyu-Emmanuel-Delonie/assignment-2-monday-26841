@@ -1,4 +1,4 @@
-package com.afanyu.question1_library_api.controller;
+package com.afanyu.question1_library_api.controller.library;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.afanyu.question1_library_api.model.Book;
+import com.afanyu.question1_library_api.model.library.Book;
 
 @RestController
 @RequestMapping("/api/books")
