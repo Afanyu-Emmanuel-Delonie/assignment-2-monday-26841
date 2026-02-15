@@ -71,7 +71,7 @@ Each module has its own detailed README with specific endpoint documentation, sa
 - [Question 3 - Restaurant Menu API](./question3-restaurant-api/Readme.MD)
 - [Question 4 - E-Commerce Product API](./question4-ecommerce-api/Readme.MD)
 - [Question 5 - Task Management API](./question5-task-api/Readme.MD)
-- [Bonus - User Profile API](./bonus-user-api/README.md)
+- [Bonus - User Profile API](./bonus_user_api/Readme.MD)
 
 ## Submission Details
 
