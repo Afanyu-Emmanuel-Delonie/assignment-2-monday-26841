@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.afanyu.question2_student_api.models.Student;
+import com.afanyu.question2_student_api.models.student.Student;
 
 @RestController
 @RequestMapping("/api/students")
